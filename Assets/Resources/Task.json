@@ -1,0 +1,451 @@
+[
+	{
+		"id": "1",
+		"Name": "新手指导任务①",
+		"Info": "欢迎来到欧卡大陆,\n既然你是被女神挑选的救世主,\n那么让我帮助你尽快熟悉这个世界吧！\n先去新手基地打败一只怪物吧",
+		"Finished": "FALSE",
+		"taskType": "Main",
+		"Requires":
+		{
+			'NewBase':{'-1':'1'}
+		},
+		"Rewards":
+		{
+			'Item':{'88':'1'}
+		}
+	},
+	{
+		"id": "2",
+		"Name": "新手指导任务②",
+		"Info": "是不是感觉有点吃力?\n勇士你的宠物现在还太弱小,\n快去使用礼包！\n用里面的物品把宠物强化到40级吧",
+		"Finished": "FALSE",
+		"taskType": "Main",
+		"Requires":
+		{
+			'Pet':{'0':'1'},
+			'Level':{'-1':'40'}
+		},
+		"Rewards":
+		{
+			'Coin':{'-1':'1000'},
+			'Exp':{'-1':'3500'}
+		}
+	}
+	,
+	{
+		"id": "3",
+		"Name": "新手指导任务③",
+		"Info": "你的宠物还需要强化,\n去新手基地击败10个怪物,\n证明你的潜力\n",
+		"Finished": "FALSE",
+		"taskType": "Main",
+		"Requires":
+		{
+			'NewBase':{'-1':'10'}
+		},
+		"Rewards":
+		{
+			'Item':{'34':'1'}
+		}
+	},
+	{
+		"id": "4",
+		"Name": "新手指导任务④",
+		"Info": "快去神殿看看,\n利用进化之书,\n让你的波姆进化吧\n",
+		"Finished": "FALSE",
+		"taskType": "Main",
+		"Requires":
+		{
+			'Pet':{'5':'1'},
+			'Level':{'-1':'40'}
+		},
+		"Rewards":
+		{
+			'Coin':{'-1':'1000'},
+			'Exp':{'-1':'3500'}
+		}
+	},
+	{
+		"id": "5",
+		"Name": "新手指导任务⑤",
+		"Info": "现在你的宠物是不是更加强大了呢?\n快去妖精森林试验一下,\n击败50只怪物",
+		"Finished": "FALSE",
+		"taskType": "Main",
+		"Requires":
+		{
+			'Forest':{'-1':'50'}
+		},
+		"Rewards":
+		{
+			'Item':{'60':'1'},
+			'Exp':{'-1':'35000000'}
+		}
+	},
+	{
+		"id": "6",
+		"Name": "新手指导任务⑥",
+		"Info": "快去使用波姆蛋,\n获得你的第二只宠物,\n然后把它升到40级再来见我",
+		"Finished": "FALSE",
+		"taskType": "Main",
+		"Requires":
+		{
+			'Pet':{'0':'1','1':'1'},
+			'Level':{'-1':'40'}
+		},
+		"Rewards":
+		{
+			'Item':
+			{
+				'38':'50',
+				'44':'5',
+				'47':'5',
+				'50':'5',
+				'53':'5',
+				'56':'5'
+			}
+		}
+	},
+	{
+		"id": "7",
+		"Name": "新手指导任务⑦",
+		"Info": "快去神殿看看,\n将两只宠物合成为更强大的宠物！",
+		"Finished": "FALSE",
+		"taskType": "Main",
+		"Requires":
+		{
+			'Merge':{'-1':'1'}
+		},
+		"Rewards":
+		{
+			'Coin':{'-1':'100000'},
+			'Exp':{'-1':'35000000'},
+			'Diamond':{'-1':'1000'}
+		}
+	},
+	{
+		"id": "8",
+		"Name": "新手指导任务·终",
+		"Info": "你已经掌握了强大的方法,\n去强化出最强的宠物,\n拯救这个世界吧",
+		"Finished": "FALSE",
+		"taskType": "Main",
+		"Requires":{},
+		"Rewards":
+		{
+			'Item':{'92':'1'}
+		}
+	},
+	{
+		"id": "9",
+		"Name": "元宝兑换①",
+		"Info": "金币多到泛滥？\n来些元宝吗？",
+		"Finished": "FALSE",
+		"taskType": "ExChange",
+		"Requires":
+		{
+			'Coin':{'-1':'10000000'}
+		},
+		"Rewards":
+		{
+			'Gold':{'-1':'100'}
+		}
+	},
+	{
+		"id": "10",
+		"Name": "元宝兑换②",
+		"Info": "钻石多到泛滥？\n来些元宝吗？",
+		"Finished": "FALSE",
+		"taskType": "ExChange",
+		"Requires":
+		{
+			'Diamond':{'-1':'100000'}
+		},
+		"Rewards":
+		{
+			'Gold':{'-1':'100'}
+		}
+	},
+	{
+		"id": "11",
+		"Name": "讨伐新手基地",
+		"Info": "怪物有点多，勇士快去清理一下",
+		"Finished": "FALSE",
+		"taskType": "Daily",
+		"Requires":
+		{
+			'NewBase':{'-1':'10'}
+		},
+		"Rewards":
+		{
+			'Coin':{'-1':'1000'}
+		}
+	}
+, 
+{
+	"id": "12",
+	"Name": "讨伐妖精森林",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Forest':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'2000'}
+	}
+}, 
+{
+	"id": "13",
+	"Name": "讨伐潮汐海崖",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Cliff':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'4000'}
+	}
+}, {
+	"id": "14",
+	"Name": "讨伐巨石山脉",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Lode':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'5000'}
+	}
+}, {
+	"id": "15",
+	"Name": "讨伐黄金陵",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Ridge':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'6000'}
+	}
+}, {
+	"id": "16",
+	"Name": "讨伐炙热沙滩",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Beach':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'7500'}
+	}
+}, {
+	"id": "17",
+	"Name": "讨伐尤玛火山",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Volcano':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'9000'}
+	}
+}, {
+	"id": "18",
+	"Name": "讨伐死亡沙漠",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Desert':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'10000'}
+	}
+}, {
+	"id": "19",
+	"Name": "讨伐海市蜃楼",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Mirage':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'12000'}
+	}
+}, {
+	"id": "20",
+	"Name": "讨伐冰滩",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Ice':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'15000'}
+	}
+}, {
+	"id": "21",
+	"Name": "讨伐海底世界",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Sea':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'18000'}
+	}
+}, {
+	"id": "22",
+	"Name": "讨伐圣诞小屋",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Christmas':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'20000'}
+	}
+}, {
+	"id": "23",
+	"Name": "讨伐黑漩涡",
+	"Info": "怪物有点多，勇士快去清理一下",
+	"Finished": "FALSE",
+	"taskType": "Daily",
+	"Requires":
+	{
+		'Eddy':{'-1':'10'}
+	},
+	"Rewards":
+	{
+		'Coin':{'-1':'30000'}
+	}
+},{
+	"id": "24",
+	"Name": "水晶兑换",
+	"Info": "金币太多了？换点水晶吧",
+	"Finished": "FALSE",
+	"taskType": "ExChange",
+	"Requires":
+	{
+		'Coin':{'-1':'10000'}
+	},
+	"Rewards":
+	{
+		'Diamond':{'-1':'100'}
+	}
+},{
+	"id": "25",
+	"Name": "初级元素收集",
+	"Info": "给我一些初级元素，\n我会给你丰厚的奖励",
+	"Finished": "FALSE",
+	"taskType": "Collect",
+	"Requires":
+	{
+		'Item':
+		{
+			'19':'5',
+			'20':'5',
+			'21':'5',
+			'22':'5',
+			'23':'5'
+		}
+	},
+	"Rewards":
+	{
+		'Item':
+		{
+			'42':'1',
+			'45':'1',
+			'48':'1',
+			'51':'1',
+			'54':'1'
+		}
+	}
+},{
+	"id": "26",
+	"Name": "中级元素收集",
+	"Info": "给我一些中级元素，\n我会给你丰厚的奖励",
+	"Finished": "FALSE",
+	"taskType": "Collect",
+	"Requires":
+	{
+		'Item':
+		{
+			'24':'5',
+			'25':'5',
+			'26':'5',
+			'27':'5',
+			'28':'5'
+		}
+	},
+	"Rewards":
+	{
+		'Item':
+		{
+			'43':'1',
+			'46':'1',
+			'49':'1',
+			'52':'1',
+			'55':'1'
+		}
+	}
+},{
+	"id": "26",
+	"Name": "高级元素收集",
+	"Info": "给我一些高级元素，\n我会给你丰厚的奖励",
+	"Finished": "FALSE",
+	"taskType": "Collect",
+	"Requires":
+	{
+		'Item':
+		{
+			'29':'5',
+			'30':'5',
+			'31':'5',
+			'32':'5',
+			'33':'5'
+		}
+	},
+	"Rewards":
+	{
+		'Item':
+		{
+			'44':'1',
+			'47':'1',
+			'50':'1',
+			'53':'1',
+			'56':'1'
+		}
+	}
+}
+
+]
