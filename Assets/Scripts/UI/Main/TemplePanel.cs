@@ -37,7 +37,8 @@ public class TemplePanel : UIBase
     List<Dropdown.OptionData> itemOptions2;
     private float time;
 
-
+    private PetModel curSelectedPet1;//当前下拉框选择的对象，另一个下拉框不可以再选择
+    private PetModel curSelectedPet2;
     #endregion
 
     private void Awake()
@@ -154,10 +155,15 @@ public class TemplePanel : UIBase
     private void ChooseItem(int v,int num)
     {
         slots[num].RemoveItem();
-        if (num == 0)
-            slots[num].StoreItem(InventoryManager.Instance.GetItemByID<Item>(guarditems[v].ItemId) as Item);
-        else
-            slots[num].StoreItem(InventoryManager.Instance.GetItemByID<Item>(additems[v].ItemId) as Item);
+        //选择非第一个选项才有效
+        if (v >= 0)
+        {
+            if (num == 0)
+                slots[num].StoreItem(InventoryManager.Instance.GetItemByID<Item>(guarditems[v].ItemId) as Item);
+            else
+                slots[num].StoreItem(InventoryManager.Instance.GetItemByID<Item>(additems[v].ItemId) as Item);
+        }
+
     }
 
     //TODO 主宠选择过 副宠列表中要去除 反之同理 不选择则要添加回来
@@ -165,7 +171,38 @@ public class TemplePanel : UIBase
     {
         //展示槽
         mergeSlots[num].RemovePet();
-        mergeSlots[num].StorePet(pets[v]);
+        print(v);
+        //选择非第一个选项才有效
+        if(v>=0)
+        {
+            if(num == 0)
+            {
+                if(curSelectedPet2!=pets[v])
+                {
+                    mergeSlots[num].StorePet(pets[v]);
+                    curSelectedPet1=pets[v];
+                }
+            }
+            else
+            {
+                if (curSelectedPet1 != pets[v])
+                {
+                    mergeSlots[num].StorePet(pets[v]);
+                    curSelectedPet2 = pets[v];
+                }
+            }
+        }
+        else
+        {
+            if (num == 0)
+            {
+                curSelectedPet1 = null;
+            }
+            else
+            {
+                curSelectedPet2 = null;
+            }
+        }
 
     }
 
