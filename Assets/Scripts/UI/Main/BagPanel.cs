@@ -35,6 +35,8 @@ public class BagPanel :  Inventory
         bagItems = new List<BagItem>();
         mergeItems = new List<BagItem>();
         taskPets = new List<int>();
+
+        inputUseAmount.text = "1";//默认使用个数为1
     }
 
     //获取当前被选中的物品槽
