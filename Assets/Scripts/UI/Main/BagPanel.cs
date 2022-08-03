@@ -35,6 +35,8 @@ public class BagPanel :  Inventory
         bagItems = new List<BagItem>();
         mergeItems = new List<BagItem>();
         taskPets = new List<int>();
+
+        inputUseAmount.text = "1";//默认使用个数为1
     }
 
     //获取当前被选中的物品槽
@@ -433,9 +435,17 @@ public class BagPanel :  Inventory
                     case Item.ItemType.Consumable:
                         if(currentSlot.GetItemID() == 1)
                         {
-                            Dispatch(AreaCode.UI, UIEvent.PET_REVIVE, null);
-                            Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "复活丹使用成功！\n宠物已复活！请继续战斗！");
-                            isUse = true;
+                            if(pet.isDie)
+                            {
+                                Dispatch(AreaCode.UI, UIEvent.PET_REVIVE, null);
+                                Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "复活丹使用成功！\n宠物已复活！请继续战斗！");
+                                isUse = true;
+                            }
+                            else
+                            {
+                                isUse = false;
+                                Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "当前主战宠物未死亡！");
+                            }
                             break;
                         }
                         if(currentSlot.GetItemID()>=2&& currentSlot.GetItemID()<=12)

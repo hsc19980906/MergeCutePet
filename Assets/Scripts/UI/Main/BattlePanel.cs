@@ -34,8 +34,8 @@ public class BattlePanel : UIBase
 
     #region 获取属性
     //private bool hasPet = false;
-    private PetModel pet;//主战宠物
-    private PetModel RealPet;
+    private PetModel pet;
+    private PetModel RealPet;//主战宠物
     private Enemy enemy;
     private int level;
     private int num;//记录是哪个种族
@@ -144,10 +144,16 @@ public class BattlePanel : UIBase
                 break;
             case UIEvent.PET_REVIVE:
                 //ChangeEnemy();
-                RealPet.isDie = false;
-                hp1 = pet.hp;
-                mp1 = pet.mp;
-                ChooseEnemy();
+                if(RealPet != null)
+                {
+                    if(RealPet.isDie)
+                    {
+                        RealPet.isDie = false;
+                        hp1 = pet.hp;
+                        mp1 = pet.mp;
+                        ChooseEnemy();
+                    }
+                }
                 break;
             case UIEvent.TITLE_REFRESH:
                 if(pet!=null)
@@ -347,19 +353,29 @@ public class BattlePanel : UIBase
     //点击地图进入对应战斗地图
     public void EnterBattle()
     {
-        if(RealPet != null&&!RealPet.isDie)
+        if(RealPet != null)
         {
-            GameObject gameObject = EventSystem.current.currentSelectedGameObject;
-            //Enum.GetName(, Convert.ToInt32(gameObject.name));  
-            PetCharacter.Instance.state.map = (Enemy.Map)System.Enum.Parse(typeof(Enemy.Map), gameObject.name);
-            SetMap(PetCharacter.Instance.state.map);
-            //进入新地图要重新选怪物
-            ChooseEnemy();
-            canvasGroup[1].alpha = 0;
-            canvasGroup[1].blocksRaycasts = false;
-            canvasGroup[2].alpha = 1;
-            canvasGroup[2].blocksRaycasts = true;
+            if (!RealPet.isDie)
+            {
+                GameObject gameObject = EventSystem.current.currentSelectedGameObject;
+                //Enum.GetName(, Convert.ToInt32(gameObject.name));  
+                PetCharacter.Instance.state.map = (Enemy.Map)System.Enum.Parse(typeof(Enemy.Map), gameObject.name);
+                SetMap(PetCharacter.Instance.state.map);
+                //进入新地图要重新选怪物
+                ChooseEnemy();
+                canvasGroup[1].alpha = 0;
+                canvasGroup[1].blocksRaycasts = false;
+                canvasGroup[2].alpha = 1;
+                canvasGroup[2].blocksRaycasts = true;
+            }
+            else
+            {
+                //【20220803】死亡需要反复提醒玩家
+                //Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "无法继续战斗！请用复活丹复活宠物");
+                Dispatch(AreaCode.UI, UIEvent.ITEM_MSG, new ItemMsg() { itemMsg = "无法继续战斗！\n请用复活丹复活宠物!", position = new Vector3(Screen.width / 2 - 250, Screen.height / 2) });
+            }
         }
+
     }
 
     //选择离线挂机 并退出游戏

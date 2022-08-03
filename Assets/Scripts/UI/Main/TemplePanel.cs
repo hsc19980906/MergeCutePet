@@ -36,6 +36,8 @@ public class TemplePanel : UIBase
     List<Dropdown.OptionData> itemOptions1;
     List<Dropdown.OptionData> itemOptions2;
     private float time;
+
+
     #endregion
 
     private void Awake()
@@ -141,6 +143,8 @@ public class TemplePanel : UIBase
     private void Start()
     {
         canvasGroup[0].alpha = 0;
+        print(dropdowns.Count<Dropdown>());
+        //下拉框中还有一项默认提示内容，所以v要-1
         dropdowns[0].onValueChanged.AddListener((int v) => ChoosePet(v-1, 0));
         dropdowns[1].onValueChanged.AddListener((int v) => ChoosePet(v-1, 1));
         dropdowns[2].onValueChanged.AddListener((int v) => ChooseItem(v-1, 0));
@@ -159,28 +163,10 @@ public class TemplePanel : UIBase
     //TODO 主宠选择过 副宠列表中要去除 反之同理 不选择则要添加回来
     private void ChoosePet(int v,int num)
     {
-        //if(mergeSlots[num].transform.childCount>0)
-        //{
-        //    if (num == 0)
-        //        listOptions2.Add(new Dropdown.OptionData(mergeSlots[num].GetPet().Name + "-" + mergeSlots[num].GetPet().CC));
-        //    else
-        //        listOptions1.Add(new Dropdown.OptionData(mergeSlots[num].GetPet().Name + "-" + mergeSlots[num].GetPet().CC));
-        //    mergeSlots[num].RemovePet();
-        //}
+        //展示槽
         mergeSlots[num].RemovePet();
         mergeSlots[num].StorePet(pets[v]);
-        //if (num == 0)
-        //    listOptions2.RemoveAt(v+1);
-        //else
-        //    listOptions1.RemoveAt(v+1);
-        //string captionName1 = dropdowns[0].captionText.text;
-        //string captionName2 = dropdowns[1].captionText.text;
-        //dropdowns[0].ClearOptions();
-        //dropdowns[1].ClearOptions();
-        //dropdowns[0].AddOptions(listOptions1);
-        //dropdowns[1].AddOptions(listOptions2);
-        //dropdowns[0].captionText.text = captionName1;
-        //dropdowns[1].captionText.text = captionName2;
+
     }
 
     private void Update()
@@ -218,10 +204,12 @@ public class TemplePanel : UIBase
         dropdowns[3].ClearOptions();
         foreach (BagItem item in guarditems)
         {
+            print(item.ItemId);
             itemOptions1.Add(new Dropdown.OptionData(InventoryManager.Instance.GetItemNameByID(item.ItemId) + "-" + item.Amount));
         }
         foreach (BagItem item in additems)
         {
+            print(item.ItemId);
             itemOptions2.Add(new Dropdown.OptionData(InventoryManager.Instance.GetItemNameByID(item.ItemId) + "-" + item.Amount));
         }
         dropdowns[2].AddOptions(itemOptions1);
@@ -264,8 +252,12 @@ public class TemplePanel : UIBase
     {
         mergePet1 = mergeSlots[0].GetPet();
         mergePet2 = mergeSlots[1].GetPet();
-        if (mergePet2.isMain)
-            Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "战斗宠物不可作副宠融合！");
+        if(PetCharacter.Instance.state.map != Enemy.Map.None&&mergePet1.isMain)
+        {
+            Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "主战宠物请先停止战斗！");
+        }
+        else if (mergePet2.isMain)
+            Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "主战宠物不可作副宠融合！");
         else
         { 
             if (PlayerCharacter.Instance.player.Coin >= 10000)
@@ -286,7 +278,7 @@ public class TemplePanel : UIBase
                                     mergePet1.ID = 70;
                                     mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
                                     mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
-                                    print(mergePet1.Name);
+                                    //print(mergePet1.Name);
                                 }
                                 //百变灵石使用效果 99%出稀有神宠 1%小神龙
                                 else if (slots[0].GetItemID() == 41)
@@ -298,7 +290,7 @@ public class TemplePanel : UIBase
                                         mergePet1.ID = new System.Random().Next(71, 75);
                                     mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
                                     mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
-                                    print(mergePet1.Name);
+                                    //print(mergePet1.Name);
                                 }
                                 else
                                 {
@@ -316,7 +308,7 @@ public class TemplePanel : UIBase
                                                 mergePet1.petKind = PetModel.PetKind.God;
                                                 mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
                                                 mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
-                                                print(mergePet1.Name);
+                                                //print(mergePet1.Name);
                                             }
                                         }
                                         //副宠高于六阶 有几率合成之后跳阶 但不能直接变成神 这里可以直接看Quality属性
