@@ -401,12 +401,17 @@ public class BagPanel :  Inventory
                         break;
                 }
                 Dispatch(AreaCode.UI, UIEvent.REFRESH_PLAYER_SIMPLE, player);
-                RemoveItem(currentSlot,Amount);
+                //RemoveItem(currentSlot,Amount);
 
-                BagItem bagItem = FindSameItem(currentSlot.GetItemID());
-                bagItem.Amount -= Amount;
-                if (bagItem.Amount == 0)
-                    bagItems.Remove(bagItem);
+                Dispatch(AreaCode.UI, UIEvent.BAG_REMOVE_REFRESH, new BagItem() { ItemId = currentSlot.GetItemID(), Amount = Amount });
+                //BagItem bagItem = FindSameItem(currentSlot.GetItemID());
+                ////print(Amount == null);
+                //bagItem.Amount -= Amount;
+                //if (bagItem.Amount == 0)
+                //{
+                //    //TODO 这里不应该完全移除 还有其他物品槽存在物品
+                //    bagItems.Remove(bagItem);
+                //}
             }
         }
     }

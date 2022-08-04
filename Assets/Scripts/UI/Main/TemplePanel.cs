@@ -79,10 +79,15 @@ public class TemplePanel : UIBase
                 bagPets = message as List<PetModel>;
                 if (bagPets != null)
                 {
-                    for (int i = 0; i < bagPets.Count; i++)
+                    int i = 0;
+                    for (; i < bagPets.Count; i++)
                     {
                         evoluteSlots[i].RemovePet();
                         evoluteSlots[i].StorePet(bagPets[i]);
+                    }
+                    for (; i < evoluteSlots.Length; i++)
+                    {
+                        evoluteSlots[i].RemovePet();
                     }
                 }
                 pets.Clear();
@@ -306,103 +311,97 @@ public class TemplePanel : UIBase
                     {
                         if (mergePet1.Level >= 40 && mergePet2.Level >= 40)
                         {
-                            int random = new System.Random().Next(0, 1000);
+                            int random = new System.Random().Next(0, 100);
+                            //至尊神石使用效果 出小神龙
+                            if (slots[0].GetItemID() == 40)
+                            {
+                                mergePet1.ID = 70;
+                                mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
+                                mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
+                                //print(mergePet1.Name);
+                            }
+                            //百变灵石使用效果 99%出稀有神宠 1%小神龙
+                            else if (slots[0].GetItemID() == 41)
+                            {
+                                if (random == 100)
+                                    mergePet1.ID = 70;
+                                else
+                                    mergePet1.ID = new System.Random().Next(71, 75);
+                                mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
+                                mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
+                                //print(mergePet1.Name);
+                            }
+                            random = new System.Random().Next(0, 1000);
                             if (random <= 500)
                             {
-                                //至尊神石使用效果 出小神龙
-                                if (slots[0].GetItemID() == 40)
+                                //69以上都是神宠不需要再变了 只增加CC
+                                if (mergePet1.ID < 69)
                                 {
-                                    mergePet1.ID = 70;
-                                    mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
-                                    mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
-                                    //print(mergePet1.Name);
-                                }
-                                //百变灵石使用效果 99%出稀有神宠 1%小神龙
-                                else if (slots[0].GetItemID() == 41)
-                                {
-                                    random = new System.Random().Next(0, 100);
-                                    if (random == 100)
-                                        mergePet1.ID = 70;
-                                    else
-                                        mergePet1.ID = new System.Random().Next(71, 75);
-                                    mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
-                                    mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
-                                    //print(mergePet1.Name);
-                                }
-                                else
-                                {
-                                    //69以上都是神宠不需要再变了 只增加CC
-                                    if (mergePet1.ID < 69)
+                                    //龙有30%可能变成神 不然就只增加CC
+                                    if (mergePet2.Quality == PetModel.PetQuality.Dragon)
                                     {
-                                        //龙有30%可能变成神 不然就只增加CC
-                                        if (mergePet2.Quality == PetModel.PetQuality.Dragon)
-                                        {
-                                            random = new System.Random().Next(0, 100);
-                                            if (random >= 70)
-                                            {
-                                                mergePet1.ID += 5;
-                                                mergePet1.Quality = PetModel.PetQuality.God;
-                                                mergePet1.petKind = PetModel.PetKind.God;
-                                                mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
-                                                mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
-                                                //print(mergePet1.Name);
-                                            }
-                                        }
-                                        //副宠高于六阶 有几率合成之后跳阶 但不能直接变成神 这里可以直接看Quality属性
-                                        else if ((mergePet2.Quality == PetModel.PetQuality.Six && new System.Random().Next(0, 1000) >= 990) ||
-                                            (mergePet2.Quality == PetModel.PetQuality.Seven && new System.Random().Next(0, 1000) >= 900) ||
-                                            (mergePet2.Quality == PetModel.PetQuality.Eight && new System.Random().Next(0, 1000) >= 750) ||
-                                            (mergePet2.Quality == PetModel.PetQuality.Nine && new System.Random().Next(0, 1000) >= 550) ||
-                                            (mergePet2.Quality == PetModel.PetQuality.Ten && new System.Random().Next(0, 1000) >= 300) ||
-                                            (mergePet2.Quality == PetModel.PetQuality.Eleven))
-                                        {
-                                            mergePet1.ID += 10;
-                                            mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
-                                            mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
-                                            //print(mergePet1.Name);
-                                        }
-                                        else
+                                        random = new System.Random().Next(0, 100);
+                                        if (random >= 70)
                                         {
                                             mergePet1.ID += 5;
+                                            mergePet1.Quality = PetModel.PetQuality.God;
+                                            mergePet1.petKind = PetModel.PetKind.God;
                                             mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
                                             mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
                                             //print(mergePet1.Name);
                                         }
                                     }
-                                    mergePet1.Merge(mergePet2, slots[0].GetItemID(), slots[1].GetItemID());
-                                    //升级之后等级清除
-                                    mergePet1.Level = 1;
-                                    mergePet1.ChangeAttris();
-                                    //    }
-                                    //}
-                                    //InventoryManager.Instance.ShowToolTip("合成成功");
-                                    Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "合成成功");
-                                    PetCharacter.Instance.state.MergeNum++;
-                                    //替换成新的宠物
-                                    for (int i = 0; i < PetCharacter.Instance.ranchPets.Count; i++)
+                                    //副宠高于六阶 有几率合成之后跳阶 但不能直接变成神 这里可以直接看Quality属性
+                                    else if ((mergePet2.Quality == PetModel.PetQuality.Six && new System.Random().Next(0, 1000) >= 990) ||
+                                        (mergePet2.Quality == PetModel.PetQuality.Seven && new System.Random().Next(0, 1000) >= 900) ||
+                                        (mergePet2.Quality == PetModel.PetQuality.Eight && new System.Random().Next(0, 1000) >= 750) ||
+                                        (mergePet2.Quality == PetModel.PetQuality.Nine && new System.Random().Next(0, 1000) >= 550) ||
+                                        (mergePet2.Quality == PetModel.PetQuality.Ten && new System.Random().Next(0, 1000) >= 300) ||
+                                        (mergePet2.Quality == PetModel.PetQuality.Eleven))
                                     {
-                                        if (PetCharacter.Instance.ranchPets[i].id_pet == mergePet1.id_pet)
-                                            PetCharacter.Instance.ranchPets[i] = mergePet1;
+                                        mergePet1.ID += 10;
+                                        mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
+                                        mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
+                                        //print(mergePet1.Name);
                                     }
-                                    for (int i = 0; i < PetCharacter.Instance.bagPets.Count; i++)
+                                    else
                                     {
-                                        if (PetCharacter.Instance.bagPets[i].id_pet == mergePet1.id_pet)
-                                        {
-                                            PetCharacter.Instance.bagPets[i] = mergePet1;
-                                        }
-
+                                        mergePet1.ID += 5;
+                                        mergePet1.Name = PetCharacter.Instance.GetPetNameByID(mergePet1.ID);
+                                        mergePet1.Sprite = PetCharacter.Instance.GetPetSpriteByID(mergePet1.ID);
+                                        //print(mergePet1.Name);
                                     }
-                                    //合成成功移除副宠
-                                    if (PetCharacter.Instance.ranchPets.Contains(mergePet2))
-                                    {
-                                        PetCharacter.Instance.ranchPets.Remove(mergePet2);
-                                    }
-                                    if (PetCharacter.Instance.bagPets.Contains(mergePet2))
-                                    {
-                                        PetCharacter.Instance.bagPets.Remove(mergePet2);
-                                    }
-                                    pets.Remove(mergePet2);
                                 }
+                                mergePet1.Merge(mergePet2, slots[0].GetItemID(), slots[1].GetItemID());
+                                //升级之后等级清除
+                                mergePet1.Level = 1;
+                                mergePet1.ChangeAttris();
+                                Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "恭喜您成功合成出" + mergePet1.Name + "!");
+                                PetCharacter.Instance.state.MergeNum++;
+                                //替换成新的宠物
+                                for (int i = 0; i < PetCharacter.Instance.ranchPets.Count; i++)
+                                {
+                                    if (PetCharacter.Instance.ranchPets[i].id_pet == mergePet1.id_pet)
+                                        PetCharacter.Instance.ranchPets[i] = mergePet1;
+                                }
+                                for (int i = 0; i < PetCharacter.Instance.bagPets.Count; i++)
+                                {
+                                    if (PetCharacter.Instance.bagPets[i].id_pet == mergePet1.id_pet)
+                                    {
+                                        PetCharacter.Instance.bagPets[i] = mergePet1;
+                                    }
+
+                                }
+                                //合成成功移除副宠
+                                if (PetCharacter.Instance.ranchPets.Contains(mergePet2))
+                                {
+                                    PetCharacter.Instance.ranchPets.Remove(mergePet2);
+                                }
+                                if (PetCharacter.Instance.bagPets.Contains(mergePet2))
+                                {
+                                    PetCharacter.Instance.bagPets.Remove(mergePet2);
+                                }
+                                pets.Remove(mergePet2);
                             }
                             else
                             {
@@ -418,22 +417,40 @@ public class TemplePanel : UIBase
                                         PetCharacter.Instance.bagPets.Remove(mergePet2);
                                     }
                                     pets.Remove(mergePet2);
+                                    Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "合成失败，副宠消失！");
                                 }
-                                //InventoryManager.Instance.ShowToolTip("合成失败");
-                                Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "合成失败");
+                                //如果使用了道具 则移除背包中道具
+                                else
+                                {
+                                    Dispatch(AreaCode.UI, UIEvent.BAG_REMOVE_REFRESH, new BagItem() { Amount = 1, ItemId = slots[0].GetItemID() });
+                                    if (slots[1].GetItemID() != -1)
+                                        Dispatch(AreaCode.UI, UIEvent.BAG_REMOVE_REFRESH, new BagItem() { Amount = 1, ItemId = slots[1].GetItemID() });
+                                    Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "合成失败，请继续努力！");
+                                } 
                             }
-                            //如果使用了道具 则移除背包中道具
-                            if (slots[0].GetItemID() != -1)
-                                Dispatch(AreaCode.UI, UIEvent.BAG_REMOVE_REFRESH, new BagItem() { Amount = 1, ItemId =  slots[0].GetItemID()  });
-                            if (slots[1].GetItemID() != -1)
-                                Dispatch(AreaCode.UI, UIEvent.BAG_REMOVE_REFRESH, new BagItem() { Amount = 1, ItemId =  slots[1].GetItemID()  });
+
                             //刷新牧场和背包宠物
                             Dispatch(AreaCode.UI, UIEvent.RANCH_REFRESH, PetCharacter.Instance.ranchPets);
                             Dispatch(AreaCode.UI, UIEvent.PET_BAG_REFRESH, PetCharacter.Instance.bagPets);
                             PlayerCharacter.Instance.player.ChangeMoney(-10000, 0, 0);
                             Dispatch(AreaCode.UI, UIEvent.REFRESH_PLAYER_MONEY, PlayerCharacter.Instance.player);
                             Dispatch(AreaCode.UI, UIEvent.GET_MERGE_ITEM, null);
+                            //刷新神庙信息
+                            mergeSlots[0].RemovePet();
+                            mergeSlots[0].StorePet(mergePet1);
+                            mergeSlots[1].RemovePet();
+                            slots[0].RemoveItem();
+                            slots[1].RemoveItem();
+                            SetChooseItem();
                         }
+                        else
+                        {
+                            Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "有宠物没有达到40级！");
+                        }
+                    }
+                    else
+                    {
+                        Dispatch(AreaCode.UI, UIEvent.SYSTEM_MSG, "你居然想要空手套白狼！");
                     }
                 }
             }

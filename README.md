@@ -9,11 +9,7 @@
 
 （1）下载 [Photon Engine SDKs | Photon Engine](https://www.photonengine.com/zh-CN/sdks#server-sdkserverserver) ，注意这里下v4.0版本的SDK。下载后，没记错解压到自己指定目录下就行。
 
-（2）配置
-
-[服务器端程序]: https://github.com/hsc19980906/MergePetServer
-
-中的MergePetServer的生成路径，该路径位于刚刚解压PhotonServer路径的“..\deploy\MergePetServer\bin\”。
+（2）配置服务器端程序（见我的另一个仓库MergePetServer）中的MergePetServer工程的生成路径，该路径位于刚刚解压PhotonServer路径的“..\deploy\MergePetServer\bin\”。
 
 （3）配置PhotonServer路径的“..\deploy\bin_Win64\”下的PhotonServer.config文件。
 
@@ -123,5 +119,20 @@
 如果自己想对这个文件做一些其他配置，可以查查官网资料或是参考一些博客。
 
 （4）启动PhotonServer路径的“..\deploy\bin_Win64\”下PhotonControl.exe，左下角会出现它的小图标，右击该图标，选择MergePetServer->Start as application就可以开启客户端，开始游戏了。
+
+（5）不...等等。还需要安装mysql存储用户数据，mysql的安装就不介绍了。数据库创建可以参考NHibernateHelper脚本中：
+
+```c#
+_sessionFactory = Fluently.Configure().Database(MySQLConfiguration.
+                        Standard.ConnectionString(db => db.Server("localhost").
+                        Database("mergepetserver").Username("root").Password("123456")))
+                .Mappings(x => x.FluentMappings.AddFromAssemblyOf<NHibernateHelper>()).BuildSessionFactory();
+```
+
+主要修改的是数据库名、用户名和密码，你根据你的设置修改即可。
+
+数据库中我现在就创建了一张表player，里面的字段包括"id_player"	"Profile"	"Account"	"IsCreate"	"Password"	"PlayerName"	"RegisterTime"	"Sex"	"Max_CE"	"imgPet"	"Level"	"petName"，可以参考Player类，是一一对应，一致的。
+
+现在应该真的可以开始游戏了，如果还是行不通的话，欢迎来找我QQ：3274737632。
 
 注意：客户端里目前配置的服务器端地址是127.0.0.1也就是本机地址（在NetManager脚本中可以修改它），如果希望远程联机，又不想买云服务器的话，可以试试内网穿透。
